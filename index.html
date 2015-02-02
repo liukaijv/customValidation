@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>修改的验证插件</title>	
+	<script src="js/jquery-1.8.3.js"></script>
+	<script src="js/jquery.validate.js"></script>
+	<script>
+	$.validator.setDefaults({
+		submitHandler: function() {
+			var data = ($('#commentForm').serializeArray());
+			var html = '';
+			$.each(data, function(key, val){
+				html += "<li>" + val.name + "=>" + val.value + "</li>";
+			});
+			$('#formData').html(html);
+		}
+	});	
+	</script>
+	<style>
+	#main {
+		width: 500px;
+		margin: 20px auto;
+		font-size: 12px;
+	}
+	#commentForm label {
+		vertical-align: top;
+		width: 150px;
+		display: inline-block;
+	}
+	#commentForm span.error, #commentForm input.submit {
+		margin-left: 153px;
+	}
+	#commentForm span.error {				
+		display: block;
+		color: red;
+	}
+	#formData {
+		font-size: 16px;
+	}
+	</style>
+</head>
+<body>
+
+<div id="main">	
+	<form class="cmxform" id="commentForm" method="get" action="" data-auto-validate="true">
+		<fieldset>
+			
+			<p>
+				<label for="cname">用户名</label>
+				<input id="cname" name="name" data-msgs="{required:'用户名必填'}" data-rules="{required:true,userName:true}" type="text">
+			</p>
+			<p>
+				<label for="cemail">E-Mail</label>
+				<input id="cemail" type="text" data-rule-required="true" data-rule-email="true"  name="email">
+			</p>
+			<p>
+				<label for="cemail">地区</label>
+				<select name="area">
+					<optiond selected="selected">成都</option>
+					<option>泸州</option>
+					<option>重庆</option>
+				</select>
+			</p>
+			<p>
+				<label for="curl">个人网站</label>
+				<input id="curl" type="text" data-rule-required="true" data-rule-url="true" name="url">
+			</p>
+			<p>
+				<label for="ccomment">你的留言</label>
+				<textarea id="ccomment" name="comment" data-rules="{required:true,minlength:10,maxlength:100}"></textarea>
+			</p>
+			<p>
+				<input class="submit" type="submit" value="提交">
+			</p>
+		</fieldset>
+	</form>		
+	<ul id="formData">
+		
+	</ul>
+</div>
+</body>
+</html>
